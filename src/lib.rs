@@ -1,18 +1,20 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
 #[macro_use]
+extern crate diesel;
+#[macro_use]
 extern crate rocket;
 #[macro_use]
 extern crate rocket_contrib;
-use rocket_cors;
-
-#[macro_use]
-extern crate diesel;
-
 #[macro_use]
 extern crate validator_derive;
 
+use rocket_contrib::json::JsonValue;
+use rocket_cors;
+use rocket_cors::Cors;
+
 use dotenv::dotenv;
+
 
 mod auth;
 mod config;
@@ -21,9 +23,6 @@ mod errors;
 mod models;
 mod routes;
 mod schema;
-
-use rocket_contrib::json::JsonValue;
-use rocket_cors::Cors;
 
 #[catch(404)]
 fn not_found() -> JsonValue {
@@ -41,7 +40,7 @@ pub fn rocket() -> rocket::Rocket {
     dotenv().ok();
     rocket::custom(config::from_env())
         .mount(
-            "/api",
+            "/rocket-rs",
             routes![
                 routes::users::post_users,
                 routes::users::post_users_login,
