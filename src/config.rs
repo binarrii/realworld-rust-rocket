@@ -38,6 +38,9 @@ impl AppState {
 pub fn from_env() -> Config {
     let environment = Environment::active().expect("No environment found");
 
+    let address = env::var("ADDRESS")
+        .unwrap_or_else(|_| "0.0.0.0".to_string());
+
     let port = env::var("PORT")
         .unwrap_or_else(|_| "8000".to_string())
         .parse::<u16>()
@@ -53,6 +56,7 @@ pub fn from_env() -> Config {
 
     Config::build(environment)
         .environment(environment)
+        .address(address)
         .port(port)
         .extra("databases", databases)
         .finalize()

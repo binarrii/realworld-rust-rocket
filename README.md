@@ -57,6 +57,3 @@ create multiple articles with the same title. To disable it:
 cargo run --no-default-features
 
 ```
-
-### TODO
-1. Bettter error handling
