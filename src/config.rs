@@ -1,7 +1,8 @@
-use rocket::fairing::AdHoc;
-use rocket::config::{Config, Environment, Value};
 use std::collections::HashMap;
 use std::env;
+
+use rocket::config::{Config, Environment, Value};
+use rocket::fairing::AdHoc;
 
 /// Debug only secret for JWT encoding & decoding.
 const SECRET: &'static str = "8Xui8SN4mI+7egV/9dlfYYLGQJeEx4+DwmSQLwDVXJg=";
@@ -49,8 +50,8 @@ pub fn from_env() -> Config {
 
     let mut database_config = HashMap::new();
     let mut databases = HashMap::new();
-    let database_url =
-        env::var("DATABASE_URL").expect("No DATABASE_URL environment variable found");
+    let database_url = env::var("DATABASE_URL")
+        .expect("No DATABASE_URL environment variable found");
     database_config.insert("url", Value::from(database_url));
     databases.insert("diesel_postgres_pool", Value::from(database_config));
 
